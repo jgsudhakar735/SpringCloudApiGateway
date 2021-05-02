@@ -1,19 +1,21 @@
 package com.jgsudhakar.spring.cloud.apigateway.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Data;
-
+/**
+ * @Author : Sudhakar Tangellapalli
+ * @File : com.jgsudhakar.spring.cloud.apigateway.util.GatewayConstants
+ * @Date : 01/05/2021
+ */
 @Entity
-@Table(name = "APIM_API_ROUTE")
+@Table(name = "ROUTE_DEF_MTB")
 @Data
 public class RouterEntity implements Serializable{
 	
@@ -37,4 +39,6 @@ public class RouterEntity implements Serializable{
 	@Column(name = "TARGET_URL")
 	private String targetUri;
 
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "routerEntity",fetch = FetchType.EAGER)
+	private List<FilterDefinitionEntity> filterDefinitionEntitySet = new ArrayList<>();
 }

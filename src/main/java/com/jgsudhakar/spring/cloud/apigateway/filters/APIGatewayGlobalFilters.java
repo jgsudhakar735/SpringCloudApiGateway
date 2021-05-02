@@ -1,6 +1,7 @@
 package com.jgsudhakar.spring.cloud.apigateway.filters;
 
 import com.jgsudhakar.spring.cloud.apigateway.util.GatewayConstants;
+import com.jgsudhakar.spring.cloud.apigateway.util.GatewayUtil;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -25,21 +26,16 @@ public class APIGatewayGlobalFilters extends AbstractGatewayFilterFactory<APIGat
 
     @Override
     public GatewayFilter apply(Config config) {
-        log.info(":: Inside the Global API GatewayFilter ::");
+        log.info(":: Inside the Global API APIGatewayGlobalFilters ::");
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest().mutate().
-                    header(GatewayConstants.X_GBL_HEADER,generateUniqueId()).
+                    header(GatewayConstants.X_GBL_HEADER, GatewayUtil.generateUniqueId()).
                     build();
+            request.getHeaders().forEach((k,v) -> {
+                log.info("Global Filter ::"," Key: " +k + " & value :"+v);
+            });
             return chain.filter(exchange.mutate().request(request).build());
         };
-    }
-    /**
-     * Request Header Unique Id Generator
-     */
-    private static String generateUniqueId() {
-        long MSB = 0x8000000000000000L;
-        SecureRandom ng = new SecureRandom();
-        return (Long.toHexString(MSB | ng.nextLong()) + Long.toHexString(MSB | ng.nextLong())).toUpperCase();
     }
 
     @Data

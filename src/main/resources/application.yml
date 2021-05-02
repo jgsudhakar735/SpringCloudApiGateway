@@ -65,3 +65,12 @@ spring:
 logging:
   level:
     com.zaxxer.hikari.HikariConfig : error
+# Actuator end point exposing
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway
+# Custom Property
+apigateway:
+    loadYamlConfig: true

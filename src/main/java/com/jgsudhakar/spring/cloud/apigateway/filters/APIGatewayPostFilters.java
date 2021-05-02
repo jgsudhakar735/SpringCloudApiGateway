@@ -39,15 +39,6 @@ public class APIGatewayPostFilters extends AbstractGatewayFilterFactory<APIGatew
             }));
         };
     }
-    /**
-     * Request Header Unique Id Generator
-     */
-    private static String generateUniqueId() {
-        long MSB = 0x8000000000000000L;
-        SecureRandom ng = new SecureRandom();
-        String generatedUUID  = (Long.toHexString(MSB | ng.nextLong()) + Long.toHexString(MSB | ng.nextLong())).toUpperCase();
-        return generateUniqueId();
-    }
 
     @Data
     public static class Config {
